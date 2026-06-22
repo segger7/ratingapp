@@ -14,10 +14,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
-
         return Inertia::render('item/index', [
-            'items' => $items
+            'items' => Item::with([
+                'category',
+                'creator',
+            ])->get(),
         ]);
     }
 
@@ -50,9 +51,19 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Item $item)
     {
-        //
+        $item->load([
+            'category',
+            'creator',
+            'reviews.user',
+            'reviews.ratings.criterion',
+            'reviews.images',
+        ]);
+
+        return Inertia::render('item/show', [
+            'item' => $item,
+        ]);
     }
 
     /**

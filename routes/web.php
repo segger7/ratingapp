@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item', [ItemController::class, 'index']);
     Route::get('/item/create', [ItemController::class, 'create']);
     Route::post('/item', [ItemController::class, 'store']);
+    Route::get('/item/{item}', [ItemController::class, 'show']);
 });
 
 require __DIR__.'/settings.php';
