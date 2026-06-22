@@ -9,8 +9,10 @@ export default function AppLayout({
     children: React.ReactNode;
 }) {
     return (
-        <AppLayoutTemplate breadcrumbs={breadcrumbs}>
+        <>
+
             {children}
-        </AppLayoutTemplate>
-    );
+
+        </>
+    ); //<AppLayoutTemplate breadcrumbs={breadcrumbs}>
 }

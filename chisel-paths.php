@@ -3,7 +3,7 @@
 return [
     'login' => 'resources/js/pages/auth/login.tsx',
     'register' => 'resources/js/pages/auth/register.tsx',
-    'welcome' => 'resources/js/pages/welcome.tsx',
+    'welcome' => 'resources/js/pages/home.tsx',
     'profile' => 'resources/js/pages/settings/profile.tsx',
     'security' => 'resources/js/pages/settings/security.tsx',
     'verify_email' => 'resources/js/pages/auth/verify-email.tsx',
