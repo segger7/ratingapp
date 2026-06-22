@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'home');
@@ -14,6 +15,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item/create', [ItemController::class, 'create']);
     Route::post('/item', [ItemController::class, 'store']);
     Route::get('/item/{item}', [ItemController::class, 'show']);
+    Route::get('/item/{item}/rate', [RatingController::class, 'create']);
+    Route::post('/item/{item}/rate', [RatingController::class, 'store']);
 });
 
 require __DIR__.'/settings.php';

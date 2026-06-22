@@ -16,17 +16,17 @@ export default function Index({ items }) {
             <div className="mb-8 flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold">
-                        Items
+                        Einträge
                     </h1>
 
                     <p className="text-muted-foreground">
-                        Alle eingetragenen Items
+                        Alle Einträge
                     </p>
                 </div>
 
                 <Button asChild>
                     <Link href="/item/create">
-                        Neues Item
+                        Neuer Eintrag
                     </Link>
                 </Button>
             </div>
@@ -34,7 +34,7 @@ export default function Index({ items }) {
             {items.length === 0 ? (
                 <Card>
                     <CardContent className="py-8 text-center">
-                        Noch keine Items vorhanden.
+                        Noch keine Einträge vorhanden.
                     </CardContent>
                 </Card>
             ) : (
