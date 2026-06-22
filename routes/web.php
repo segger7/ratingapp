@@ -2,6 +2,17 @@
 
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CriterionController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ReviewController;
+
+
+Route::resource('item', ItemController::class);
+Route::resource('reviews', ReviewController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('criteria', CriterionController::class);
+Route::resource('ratings', RatingController::class);
 
 Route::inertia('/', 'home');
 
