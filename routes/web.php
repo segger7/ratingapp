@@ -5,7 +5,6 @@ use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CriterionController;
-use App\Http\Controllers\ReviewController;
 
 //???
 /*Route::resource('item', ItemController::class);
