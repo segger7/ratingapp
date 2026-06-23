@@ -25,9 +25,17 @@ class RatingController extends Controller
     {
         $item->load('reviews');
 
+        $criteria = Criterion::all();
+
+        if ($criteria->isEmpty()) {
+            return redirect()
+                ->route('criterion.create')
+                ->with('error', 'Bitte zuerst ein Kriterium erstellen.');
+        }
+
         return Inertia::render('rating/create', [
             'item' => $item,
-            'criteria' => Criterion::all(),
+            'criteria' => $criteria,
         ]);
     }
 
@@ -55,7 +63,7 @@ class RatingController extends Controller
             ]);
         }
 
-        return redirect()->route('item.show', $item);
+        return redirect('/item/'.$item->id);
     }
 
     /**

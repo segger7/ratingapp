@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Criterion;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CriterionController extends Controller
 {
@@ -12,7 +13,9 @@ class CriterionController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('criterion/index', [
+            'criteria' => Criterion::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -20,15 +23,19 @@ class CriterionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('criterion/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        Criterion::create($validated);
+
+        return redirect('/criterion')
+            ->with('success', 'Kriterium erstellt.');
     }
 
     /**
@@ -58,8 +65,10 @@ class CriterionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Criterion $criteria)
+    public function destroy(Criterion $criterion)
     {
-        //
+        $criterion->delete();
+
+        return back();
     }
 }

@@ -76,9 +76,11 @@ export default function Show({ item }) {
                 </CardHeader>
 
                 <CardContent className="space-y-6">
-                    <Link href={`/item/${item.id}/rate`}>
-                        Eintrag bewerten
-                    </Link>
+                    <Button asChild>
+                        <Link href={`/item/${item.id}/rate`}>
+                            Eintrag bewerten
+                        </Link>
+                    </Button>
                     {item.reviews.length === 0 ? (
                         <p className="text-muted-foreground">
                             Noch keine Bewertungen vorhanden.

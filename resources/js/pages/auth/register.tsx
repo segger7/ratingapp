@@ -103,7 +103,7 @@ export default function Register({ passwordRules }: Props) {
 
                         <div className="text-center text-sm text-muted-foreground">
                             Already have an account?{' '}
-                            <TextLink href="/" tabIndex={6}>
+                            <TextLink href="/login" tabIndex={6}>
                                 Log in
                             </TextLink>
                         </div>

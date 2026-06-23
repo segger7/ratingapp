@@ -5,10 +5,12 @@ import {
     CardContent,
     CardHeader,
     CardTitle,
+    CardDescription,
 } from '@/components/ui/card';
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Link } from '@inertiajs/react';
 
 export default function Create({ item, criteria }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -30,6 +32,32 @@ export default function Create({ item, criteria }) {
         updated[index].score = value;
         setData('ratings', updated);
     };
+
+    if (criteria.length === 0) {
+        return (
+            <div className="container mx-auto max-w-3xl py-8">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                            Keine Bewertung möglich
+                        </CardTitle>
+
+                        <CardDescription>
+                            Für Bewertungen müssen zuerst Kriterien angelegt werden.
+                        </CardDescription>
+                    </CardHeader>
+
+                    <CardContent>
+                        <Button asChild>
+                            <Link href="/criterion/create">
+                                Kriterium erstellen
+                            </Link>
+                        </Button>
+                    </CardContent>
+                </Card>
+            </div>
+        );
+    }
 
     return (
         <div className="container mx-auto max-w-3xl py-8 space-y-6">

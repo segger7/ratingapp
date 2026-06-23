@@ -5,20 +5,19 @@ use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CriterionController;
-use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReviewController;
 
-
-Route::resource('item', ItemController::class);
+//???
+/*Route::resource('item', ItemController::class);
 Route::resource('reviews', ReviewController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('criteria', CriterionController::class);
-Route::resource('ratings', RatingController::class);
+Route::resource('ratings', RatingController::class);*/
 
 Route::inertia('/', 'home');
 
-Route::inertia('/register', 'auth/register');
-Route::inertia('/login', 'auth/login');
+Route::inertia('/register', 'auth/register')->name('register');
+Route::inertia('/login', 'auth/login')->name('login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //Route::inertia('dashboard', 'dashboard')->name('dashboard');
@@ -28,6 +27,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item/{item}', [ItemController::class, 'show']);
     Route::get('/item/{item}/rate', [RatingController::class, 'create']);
     Route::post('/item/{item}/rate', [RatingController::class, 'store']);
+    Route::get('/criterion', [CriterionController::class, 'index']);
+    Route::get('/criterion/create', [CriterionController::class, 'create']);
+    Route::post('/criterion', [CriterionController::class, 'store']);
+    Route::delete(
+        '/criterion/{criterion}',
+        [CriterionController::class, 'destroy']
+    );
+
 });
 
 require __DIR__.'/settings.php';
