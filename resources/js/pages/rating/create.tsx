@@ -15,7 +15,6 @@ import { Link } from '@inertiajs/react';
 export default function Create({ item, criteria }) {
     const { data, setData, post, processing, errors } = useForm({
         comment: '',
-        overall_score: '',
         ratings: criteria.map((c) => ({
             criterion_id: c.id,
             score: 0,
@@ -24,7 +23,13 @@ export default function Create({ item, criteria }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(`/item/${item.id}/rate`);
+
+        post(`/item/${item.id}/rate`, {
+            data: {
+                ...data,
+                overall_score: averageScore,
+            },
+        });
     };
 
     const updateScore = (index, value) => {
@@ -32,6 +37,16 @@ export default function Create({ item, criteria }) {
         updated[index].score = value;
         setData('ratings', updated);
     };
+
+    const averageScore =
+        data.ratings.length > 0
+            ? (
+                data.ratings.reduce(
+                    (sum, rating) => sum + Number(rating.score),
+                    0
+                ) / data.ratings.length
+            ).toFixed(2)
+            : 0;
 
     if (criteria.length === 0) {
         return (
@@ -101,24 +116,12 @@ export default function Create({ item, criteria }) {
                             />
                         </div>
 
-                        {/* OVERALL SCORE */}
-                        <div className="space-y-2">
-                            <Label>Gesamtbewertung (0-5)</Label>
+                        <div className="rounded-lg border p-4">
+                            <Label>Gesamtbewertung</Label>
 
-                            <input
-                                type="number"
-                                min="0"
-                                max="5"
-                                step="0.1"
-                                value={data.overall_score}
-                                onChange={(e) =>
-                                    setData(
-                                        'overall_score',
-                                        e.target.value
-                                    )
-                                }
-                                className="border rounded p-2 w-full"
-                            />
+                            <p className="mt-2 text-2xl font-bold">
+                                {averageScore} / 5
+                            </p>
                         </div>
 
                         {/* CRITERIA */}

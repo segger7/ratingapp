@@ -46,14 +46,16 @@ class RatingController extends Controller
     {
         $validated = $request->validate([
             'comment' => ['nullable', 'string'],
-            'overall_score' => ['nullable', 'numeric', 'min:0', 'max:5'],
             'ratings' => ['required', 'array'],
         ]);
+
+        $overallScore = collect($validated['ratings'])
+            ->avg('score');
 
         $review = $item->reviews()->create([
             'user_id' => auth()->id(),
             'comment' => $validated['comment'] ?? null,
-            'overall_score' => $validated['overall_score'] ?? null,
+            'overall_score' => round($overallScore, 2),
         ]);
 
         foreach ($validated['ratings'] as $rating) {

@@ -30,10 +30,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/criterion', [CriterionController::class, 'index']);
     Route::get('/criterion/create', [CriterionController::class, 'create']);
     Route::post('/criterion', [CriterionController::class, 'store']);
-    Route::delete(
-        '/criterion/{criterion}',
-        [CriterionController::class, 'destroy']
-    );
+    Route::delete('/criterion/{criterion}', [CriterionController::class, 'destroy']);
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+    Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 });
 
