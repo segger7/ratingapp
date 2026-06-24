@@ -25,9 +25,14 @@ export default function Create({ item, criteria }) {
         e.preventDefault();
 
         post(`/item/${item.id}/rate`, {
-            data: {
-                ...data,
-                overall_score: averageScore,
+            ...data,
+            overall_score: averageScore,
+            preserveScroll: true,
+            onError: (errors) => {
+                console.log(errors);
+            },
+            onSuccess: () => {
+                window.location.href = `/item/${item.id}`;
             },
         });
     };
@@ -40,12 +45,12 @@ export default function Create({ item, criteria }) {
 
     const averageScore =
         data.ratings.length > 0
-            ? (
+            ? Number(
                 data.ratings.reduce(
                     (sum, rating) => sum + Number(rating.score),
                     0
                 ) / data.ratings.length
-            ).toFixed(2)
+            )
             : 0;
 
     if (criteria.length === 0) {

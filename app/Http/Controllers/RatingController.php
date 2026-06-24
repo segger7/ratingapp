@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Criterion;
 use App\Models\Item;
 use App\Models\Rating;
+use App\Models\Review;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -44,6 +46,10 @@ class RatingController extends Controller
      */
     public function store(Request $request, Item $item)
     {
+        if ($item->reviews()->where('user_id', auth()->id())->exists()) {
+            return back()->withErrors('Du hast bereits bewertet.');
+        }
+
         $validated = $request->validate([
             'comment' => ['nullable', 'string'],
             'ratings' => ['required', 'array'],
@@ -95,8 +101,17 @@ class RatingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Rating $rating)
+    public function destroy(Review $review): RedirectResponse
     {
-        //
+
+        abort_unless(
+            auth()->user()->role === 'admin' ||
+            $review->user_id === auth()->id(),
+            403
+        );
+
+        $review->delete();
+
+        return back();
     }
 }

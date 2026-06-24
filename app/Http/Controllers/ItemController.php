@@ -54,15 +54,20 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         $item->load([
-            'category',
             'creator',
+            'category',
             'reviews.user',
             'reviews.ratings.criterion',
             'reviews.images',
         ]);
 
+        $userReview = $item->reviews()
+            ->where('user_id', auth()->id())
+            ->first();
+
         return Inertia::render('item/show', [
             'item' => $item,
+            'userReview' => $userReview,
         ]);
     }
 

@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item/{item}', [ItemController::class, 'show']);
     Route::get('/item/{item}/rate', [RatingController::class, 'create']);
     Route::post('/item/{item}/rate', [RatingController::class, 'store']);
+    Route::delete('/review/{review}', [RatingController::class, 'destroy'])->name('rating.destroy');
 
 });
 

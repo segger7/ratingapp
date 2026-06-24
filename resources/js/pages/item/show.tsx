@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 
 import {
     Card,
@@ -10,7 +10,22 @@ import {
 
 import { Button } from '@/components/ui/button';
 
-export default function Show({ item }) {
+export default function Show({ item, userReview }) {
+
+    const sortedReviews = [
+        ...(item.reviews || []),
+    ].sort((a, b) => {
+        if (a.user_id === userReview?.user_id) return -1;
+        if (b.user_id === userReview?.user_id) return 1;
+        return 0;
+    });
+
+    const deleteReview = (id) => {
+        if (!confirm('Bewertung wirklich löschen?')) return;
+
+        router.delete(`/review/${id}`);
+    };
+
     return (
         <div className="container mx-auto max-w-4xl py-8 space-y-6">
 
@@ -76,17 +91,20 @@ export default function Show({ item }) {
                 </CardHeader>
 
                 <CardContent className="space-y-6">
-                    <Button asChild>
-                        <Link href={`/item/${item.id}/rate`}>
-                            Eintrag bewerten
-                        </Link>
-                    </Button>
+                    {!userReview && (
+                        <Button asChild>
+                            <Link href={`/item/${item.id}/rate`}>
+                                Eintrag bewerten
+                            </Link>
+                        </Button>
+                    )}
+
                     {item.reviews.length === 0 ? (
                         <p className="text-muted-foreground">
                             Noch keine Bewertungen vorhanden.
                         </p>
                     ) : (
-                        item.reviews.map((review) => (
+                        sortedReviews.map((review) => (
                             <div
                                 key={review.id}
                                 className="border rounded-lg p-4 space-y-2"
@@ -143,6 +161,16 @@ export default function Show({ item }) {
                                             )
                                         )}
                                     </div>
+                                )}
+
+                                {review.user_id === userReview?.user_id && (
+                                    <Button
+                                        variant="destructive"
+                                        size="sm"
+                                        onClick={() => deleteReview(review.id)}
+                                    >
+                                        Meine Bewertung löschen
+                                    </Button>
                                 )}
                             </div>
                         ))
