@@ -11,6 +11,8 @@ const appName = import.meta.env.VITE_APP_NAME || 'Rating App';
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
 
+    strictMode: true,
+
     layout: (name) => {
         switch (true) {
             case name === 'welcome':
@@ -26,8 +28,6 @@ createInertiaApp({
                 return AppLayout;
         }
     },
-
-    strictMode: true,
 
     withApp(app) {
         return (

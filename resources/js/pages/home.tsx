@@ -4,6 +4,8 @@ import { Head, Link, usePage } from '@inertiajs/react';
 export default function Home() {
     const { auth } = usePage().props;
 
+    console.log(usePage().props);
+
     return (
         <>
             <div>

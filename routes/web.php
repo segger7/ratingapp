@@ -26,6 +26,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item/{item}', [ItemController::class, 'show']);
     Route::get('/item/{item}/rate', [RatingController::class, 'create']);
     Route::post('/item/{item}/rate', [RatingController::class, 'store']);
+
+});
+
+Route::middleware(['auth', 'admin', 'verified'])->group(function () {
     Route::get('/criterion', [CriterionController::class, 'index']);
     Route::get('/criterion/create', [CriterionController::class, 'create']);
     Route::post('/criterion', [CriterionController::class, 'store']);
@@ -34,7 +38,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
-
 });
 
 require __DIR__.'/settings.php';

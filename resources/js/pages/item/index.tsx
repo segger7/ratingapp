@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 export default function Index({ items }) {
+
     return (
         <div className="container mx-auto py-8">
             <div className="mb-8 flex items-center justify-between">
