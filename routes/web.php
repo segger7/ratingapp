@@ -28,6 +28,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/item/{item}/rate', [RatingController::class, 'store']);
     Route::delete('/review/{review}', [RatingController::class, 'destroy'])->name('rating.destroy');
 
+    Route::post('/logout', function () {
+        auth()->logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/');
+    })->name('logout');
 });
 
 Route::middleware(['auth', 'admin', 'verified'])->group(function () {
