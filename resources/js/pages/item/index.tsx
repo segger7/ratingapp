@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
 
 import {
     Card,
@@ -11,6 +11,13 @@ import {
 import { Button } from '@/components/ui/button';
 
 export default function Index({ items }) {
+    const { auth } = usePage().props;
+
+    const deleteItem = (id) => {
+        if (!confirm('Wirklich löschen?')) return;
+
+        router.delete(`/item/${id}`);
+    };
 
     return (
         <div className="container mx-auto py-8">
@@ -68,17 +75,21 @@ export default function Index({ items }) {
                                     </div>
                                 )}
 
-                                <div className="flex justify-end">
-                                    <Button
-                                        variant="outline"
-                                        asChild
-                                    >
-                                        <Link
-                                            href={`/item/${item.id}`}
-                                        >
+                                <div className="flex justify-end gap-2">
+                                    <Button variant="outline" asChild>
+                                        <Link href={`/item/${item.id}`}>
                                             Anzeigen
                                         </Link>
                                     </Button>
+
+                                    {auth?.user?.role === 'admin' && (
+                                        <Button
+                                            variant="destructive"
+                                            onClick={() => deleteItem(item.id)}
+                                        >
+                                            Löschen
+                                        </Button>
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>

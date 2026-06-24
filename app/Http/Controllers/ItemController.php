@@ -85,8 +85,12 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Item $item)
     {
-        //
+        abort_unless(auth()->user()->isAdmin(), 403);
+
+        $item->delete();
+
+        return redirect()->route('item.index');
     }
 }

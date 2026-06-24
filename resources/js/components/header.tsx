@@ -15,12 +15,8 @@ export default function Header() {
                 </Link>
 
                 <nav className="flex items-center gap-4">
-                    <Link href="/">
-                        Home
-                    </Link>
-
                     <Link href="/item">
-                        Items
+                        Einträge
                     </Link>
 
                     <Link href="/item/create">
