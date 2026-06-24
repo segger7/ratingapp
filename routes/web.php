@@ -21,12 +21,16 @@ Route::inertia('/login', 'auth/login')->name('login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     //Route::inertia('dashboard', 'dashboard')->name('dashboard');
+
+    //Items
     Route::get('/item', [ItemController::class, 'index'])->name('item.index');
     Route::get('/item/create', [ItemController::class, 'create'])->name('item.create');
     Route::post('/item', [ItemController::class, 'store']);
     Route::get('/item/{item}', [ItemController::class, 'show']);
     Route::get('/item/{item}/rate', [RatingController::class, 'create']);
     Route::post('/item/{item}/rate', [RatingController::class, 'store']);
+
+    //Reviews
     Route::delete('/review/{review}', [RatingController::class, 'destroy'])->name('rating.destroy');
 
     Route::post('/logout', function () {
@@ -40,11 +44,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin', 'verified'])->group(function () {
+
+    //Items
     Route::delete('/item/{item}', [ItemController::class, 'destroy'])->name('item.destroy');
+
+    //Criterions
     Route::get('/criterion', [CriterionController::class, 'index']);
     Route::get('/criterion/create', [CriterionController::class, 'create']);
     Route::post('/criterion', [CriterionController::class, 'store']);
     Route::delete('/criterion/{criterion}', [CriterionController::class, 'destroy']);
+
+    //Category
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
