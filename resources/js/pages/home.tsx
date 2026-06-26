@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 
 export default function Home({ items, filters }) {
     const [search, setSearch] = useState(filters?.search || '');
+    const { auth } = usePage().props;
 
     const submitSearch = (e) => {
         e.preventDefault();
@@ -86,11 +87,21 @@ export default function Home({ items, filters }) {
                                             Deine Bewertung: {item.user_score} / 5
                                         </div>
                                     ) : (
-                                        <Button asChild>
-                                            <Link href={`/item/${item.id}/rate`}>
-                                                Bewerten
-                                            </Link>
-                                        </Button>
+                                        (auth?.user ? (
+                                            <>
+                                            <Button asChild>
+                                                <Link href={`/item/${item.id}/rate`}>
+                                                    Bewerten
+                                                </Link>
+                                            </Button>
+                                            </>
+                                        ) : (
+                                            <>
+                                            <div className="px-3 py-2 text-sm border rounded-md">
+                                                Anmelden um zu bewerten!
+                                            </div>
+                                            </>
+                                        ))
                                     )}
                                 </div>
                             </CardContent>

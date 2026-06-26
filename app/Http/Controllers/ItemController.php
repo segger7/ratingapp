@@ -92,7 +92,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        abort_unless(auth()->user()->isAdmin(), 403);
+        abort_unless(auth()->user()->isAdmin() || auth()->id() === $item->creator_id, 403);
 
         $item->delete();
 

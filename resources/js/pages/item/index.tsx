@@ -82,7 +82,7 @@ export default function Index({ items }) {
                                         </Link>
                                     </Button>
 
-                                    {auth?.user?.role === 'admin' && (
+                                    {auth?.user?.role === 'admin' || auth?.user?.id === item.creator_id && (
                                         <Button
                                             variant="destructive"
                                             onClick={() => deleteItem(item.id)}

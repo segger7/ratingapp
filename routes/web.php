@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/item/{item}/rate', [RatingController::class, 'create']);
     Route::post('/item/{item}/rate', [RatingController::class, 'store']);
     Route::delete('/review/{review}', [RatingController::class, 'destroy'])->name('rating.destroy');
-
+    Route::delete('/item/{item}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::post('/logout', function () {
         auth()->logout();
 
@@ -40,7 +40,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin', 'verified'])->group(function () {
-    Route::delete('/item/{item}', [ItemController::class, 'destroy'])->name('item.destroy');
     Route::get('/criterion', [CriterionController::class, 'index']);
     Route::get('/criterion/create', [CriterionController::class, 'create']);
     Route::post('/criterion', [CriterionController::class, 'store']);
